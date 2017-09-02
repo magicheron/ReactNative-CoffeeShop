@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import { View, Text, StyleSheet, ScrollView, Button, Image } from 'react-native';
 import ItemContainer from './ItemContainer';
 import InputSelector from './InputSelector';
-import Data from '../core/data';
+import { ActionCreators } from '../actions/index';
 
 const styles = StyleSheet.create({
   container: {
@@ -33,13 +34,23 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class CategoriesContainer extends Component {
+class CategoriesContainer extends Component {
+
+  constructor(props) {
+    super(props);
+    
+    this.state = {
+      categories: []
+    }
+
+    props.dispatch(ActionCreators.fetchCategoryProducts());
+  }
 
   renderProductSelector = (current, i) => {
     return (
         <View key={i} style={styles.row}>
             <Text style={styles.text}>{current.name}</Text>
-            <InputSelector style={styles.selector} />
+            <InputSelector product={current} style={styles.selector} />
         </View>
     );
   };
@@ -55,7 +66,7 @@ export default class CategoriesContainer extends Component {
   };
 
   render() {
-    var items = Data.map(this.renderItem);
+    var items = this.props.categories.map(this.renderItem);
 
     return (
       <ScrollView style={styles.container}>
@@ -64,3 +75,19 @@ export default class CategoriesContainer extends Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    categories: state.categoryProducts.categories,
+  };
+}
+
+CategoriesContainer.props = {
+  categories: PropTypes.array,
+};
+
+CategoriesContainer.defaultProps = {
+  categories: [],
+};
+
+export default connect(mapStateToProps)(CategoriesContainer);

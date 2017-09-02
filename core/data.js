@@ -8,13 +8,16 @@ export default [{
   underlayColor: '#ffe26f',
   products: [{
     id: 1,
-    name: 'Espresso'
+    name: 'Espresso',
+    quantity: 0
   },{
     id: 2,
-    name: 'Cappuccino'
+    name: 'Cappuccino',
+    quantity: 0
   },{
     id: 3,
-    name: 'Lato'
+    name: 'Lato',
+    quantity: 0
   }]
 },{
   id: 2,
@@ -26,13 +29,16 @@ export default [{
   underlayColor: '#f3825f',
   products: [{
     id: 4,
-    name: 'Baklava'
+    name: 'Baklava',
+    quantity: 0
   },{
     id: 5,
-    name: 'Kunafeh Nabulsia'
+    name: 'Kunafeh Nabulsia',
+    quantity: 0
   },{
     id: 6,
-    name: 'Basbousa'
+    name: 'Basbousa',
+    quantity: 0
   }]
 },{
   id: 3,
@@ -44,13 +50,16 @@ export default [{
   underlayColor: '#a7425c',
   products: [{
     id: 7,
-    name: 'Falafel'
+    name: 'Falafel',
+    quantity: 0
   },{
     id: 8,
-    name: 'Pizza'
+    name: 'Pizza',
+    quantity: 0
   },{
     id: 9,
-    name: 'Paella'
+    name: 'Paella',
+    quantity: 0
   }]
 },{
   id: 4,
@@ -62,12 +71,15 @@ export default [{
   underlayColor: '#563761',
   products: [{
     id: 10,
-    name: 'Dry Gin'
+    name: 'Dry Gin',
+    quantity: 0
   },{
     id: 11,
-    name: 'Jagger'
+    name: 'Jagger',
+    quantity: 0
   },{
     id: 12,
-    name: 'Bruggal'
+    name: 'Bruggal',
+    quantity: 0
   }]
 }];

@@ -3,7 +3,7 @@ ReactNative-CoffeeShop
 Application
 -------------
 
-CoffeShop CoffeeShop is an application for the ReactNative workshop at XDevMadrid
+CoffeeShop is an application for the ReactNative workshop at XDevMadrid
 
 > **Note:**
 > - CoffeeShop is a PoC application, not a full featured app.

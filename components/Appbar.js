@@ -1,6 +1,8 @@
-import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { View, Text, StyleSheet, TouchableHighlight } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import { ActionCreators } from '../actions/index';
 
 const styles = StyleSheet.create({
   barContainer: {
@@ -27,10 +29,35 @@ const styles = StyleSheet.create({
     color: '#af9a50',
     fontSize: 14,
   },
+  buttonStyle: {
+    borderRadius: 4,
+  }
 });
 
-export default class Appbar extends Component {
+class Appbar extends Component {
+
+  constructor(props) {
+    super(props);
+    this.done = this.done.bind(this);
+  }
+
+  countProducts(category) {
+    if(!category) return 0;
+    return category.products.reduce((previousValue, currentValue, index, vect) => {
+      return previousValue + currentValue.quantity;
+    }, 0);
+  }
+
+  done() {
+    this.props.dispatch(ActionCreators.sendProducts(this.props.categories));
+  }
+  
   render() {
+
+    let productCount = this.props.categories.length ? this.props.categories.reduce((previousValue, currentValue, index, vect) => {
+      return previousValue + this.countProducts(currentValue);
+    }, 0) : 0;
+
     return (
         <LinearGradient start={{x: 0.0, y: 1}} end={{x: 1, y: 0.0}} colors={['#f7ffce', '#e2e4b8']} style={styles.barContainer}>
           <View style={styles.container}>
@@ -38,11 +65,33 @@ export default class Appbar extends Component {
               <Text style={styles.text}>Menu</Text>
             </View>
             <View style={styles.row}>
-              <Text style={styles.text}>2 Items</Text>
-              <Text style={styles.text}>Done</Text>
+              <Text style={styles.text}>{ productCount } Items</Text>
+              <TouchableHighlight 
+                        style={styles.buttonStyle} 
+                        onPress={this.done.bind(this)}
+                        underlayColor="rgba(255,255,255,0.8)">
+                <Text style={styles.text}>Done</Text>
+              </TouchableHighlight>
             </View>
           </View>
         </LinearGradient>
     );
+
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    categories: state.categoryProducts.categories,
+  };
+}
+
+Appbar.props = {
+  categories: PropTypes.array,
+};
+
+Appbar.defaultProps = {
+  categories: [],
+};
+
+export default connect(mapStateToProps)(Appbar);

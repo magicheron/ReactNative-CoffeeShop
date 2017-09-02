@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import { View, Text, StyleSheet, Button, TouchableHighlight } from 'react-native';
+import { ActionCreators } from '../actions/index';
 
 const styles = StyleSheet.create({
   selectorContainer: {
@@ -40,34 +42,31 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class InputSelector extends Component {
+class InputSelector extends Component {
 
     constructor(props){
         super(props);
-
-        this.state = {
-            count       : 0
-        };
-        
         this.onPressUp = this.onPressUp.bind(this);
         this.onPressDown = this.onPressDown.bind(this);
     }
 
     onPressUp(e) {
-      this.setState(previousState => {
-        return { count: previousState.count + 1 };
-      });
+      this.props.dispatch(ActionCreators.incrementQuantityCategoryProduct({product: this.props.product}));
+      // this.setState(previousState => {
+      //   return { count: previousState.count + 1 };
+      // });
     }
 
     onPressDown(e) {
-      this.setState(previousState => {
-        return { count: Math.max(previousState.count - 1, 0) };
-      });
+      this.props.dispatch(ActionCreators.decrementQuantityCategoryProduct({product: this.props.product}));
+      // this.setState(previousState => {
+      //   return { count: Math.max(previousState.count - 1, 0) };
+      // });
     }
 
     
   render() {
-    var count = this.state.count;
+    var count = this.props.product ? this.props.product.quantity : 0;
 
     return (
       <View style={styles.selectorContainer}>
@@ -88,3 +87,13 @@ export default class InputSelector extends Component {
     );
   }
 }
+
+InputSelector.props = {
+  product: PropTypes.any,
+};
+
+InputSelector.defaultProps = {
+  product: null,
+};
+
+export default connect()(InputSelector);
